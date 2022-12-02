@@ -1,5 +1,6 @@
-const { app, BrowserWindow, screen } = require('electron')
-const path = require("path");
+const { app, BrowserWindow, screen } = require('electron');
+const MainWindow = require('./mainWindow');
+const SecondWindow = require('./secondWindow');
 
 const isDev = process.env.NODE_ENV !== 'production' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
@@ -9,30 +10,12 @@ let mainWindow;
 let secondWindow;
 
 const createMainWindow = () => {
-  mainWindow = new BrowserWindow({ 
-    width: 1200, 
-    height: 800,
-    webPreperences: {
-      nodeIntegration: true
-    }
-  });
-  mainWindow.loadURL(
-    isDev
-      ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "../build/index.html")}`
-    );
-  // cleaning some garbage
+  mainWindow = new MainWindow('../build/index.html', isDev);
   mainWindow.on("closed", () => (mainWindow = null));
 }
 
 const createSecondWindow = (x,y) => {
-  secondWindow = new BrowserWindow({ x, y });
-  secondWindow.loadURL(
-    isDev
-    ? "http://localhost:3000/#/about"
-    : `file://${path.join(__dirname, "../build/index.html#/about")}`
-  );
-  secondWindow.setFullScreen(true);
+  secondWindow = new SecondWindow({ x, y }, isDev);
 }
 
 // app.on("ready", createWindow);
@@ -53,7 +36,6 @@ app.whenReady().then(() => {
     createSecondWindow(x,y);
   }
 })
-
 
 
 // mac configurations

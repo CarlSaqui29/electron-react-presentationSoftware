@@ -44,5 +44,10 @@ Feel free to submit an issue or pull request anytime. If a change is made to the
 @willjw3 | https://github.com/willjw3
 
 
+# Bugs
+1. when open the 2nd window on 2nd monitor when 2nd monitor has displays of other app, the 
+2nd window will not open fullscreen and will also have frame.
+
+
 
 
